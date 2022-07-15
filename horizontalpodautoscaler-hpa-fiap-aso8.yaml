@@ -1,0 +1,88 @@
+﻿kind: HorizontalPodAutoscaler
+apiVersion: autoscaling/v2beta2
+metadata:
+  name: hpa-fiap-aso8
+  namespace: rm-343618
+  selfLink: >-
+    /apis/autoscaling/v2beta2/namespaces/rm-343618/horizontalpodautoscalers/hpa-fiap-aso8
+  uid: ecfa9241-3b97-4f12-b1cc-69e5514a8a91
+  resourceVersion: '98804002'
+  creationTimestamp: '2022-07-15T21:13:00Z'
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration: >
+      {"apiVersion":"autoscaling/v2beta2","kind":"HorizontalPodAutoscaler","metadata":{"annotations":{},"name":"hpa-fiap-aso8","namespace":"rm-343618"},"spec":{"maxReplicas":3,"metrics":[{"resource":{"name":"cpu","target":{"averageUtilization":50,"type":"Utilization"}},"type":"Resource"}],"minReplicas":1,"scaleTargetRef":{"apiVersion":"apps/v1","kind":"Deployment","name":"blog-django-py-git"}}}
+  managedFields:
+    - manager: kubectl-client-side-apply
+      operation: Update
+      apiVersion: autoscaling/v2beta2
+      time: '2022-07-15T21:13:00Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:kubectl.kubernetes.io/last-applied-configuration': {}
+        'f:spec':
+          'f:maxReplicas': {}
+          'f:metrics': {}
+          'f:minReplicas': {}
+          'f:scaleTargetRef':
+            'f:apiVersion': {}
+            'f:kind': {}
+            'f:name': {}
+    - manager: kube-controller-manager
+      operation: Update
+      apiVersion: autoscaling/v1
+      time: '2022-07-15T21:13:15Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:autoscaling.alpha.kubernetes.io/conditions': {}
+            'f:autoscaling.alpha.kubernetes.io/current-metrics': {}
+        'f:status':
+          'f:currentCPUUtilizationPercentage': {}
+          'f:currentReplicas': {}
+          'f:desiredReplicas': {}
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: blog-django-py-git
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 3
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        target:
+          type: Utilization
+          averageUtilization: 50
+status:
+  currentReplicas: 1
+  desiredReplicas: 1
+  currentMetrics:
+    - type: Resource
+      resource:
+        name: cpu
+        current:
+          averageValue: '0'
+          averageUtilization: 0
+  conditions:
+    - type: AbleToScale
+      status: 'True'
+      lastTransitionTime: '2022-07-15T21:13:15Z'
+      reason: ReadyForNewScale
+      message: recommended size matches current size
+    - type: ScalingActive
+      status: 'True'
+      lastTransitionTime: '2022-07-15T21:13:15Z'
+      reason: ValidMetricFound
+      message: >-
+        the HPA was able to successfully calculate a replica count from cpu
+        resource utilization (percentage of request)
+    - type: ScalingLimited
+      status: 'True'
+      lastTransitionTime: '2022-07-15T21:18:15Z'
+      reason: TooFewReplicas
+      message: the desired replica count is less than the minimum replica count
